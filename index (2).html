@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tanuja Naidu Adabala — DevOps Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+
+<style>
+/* ============================
+   DESIGN TOKENS
+   ============================ */
+:root {
+  --bg:           #fefcfb;
+  --bg-alt:       #fff8f8;
+  --surface:      #ffffff;
+  --surface2:     #fff2f4;
+  --border:       #f0dde0;
+  --border-pink:  #f5c0c8;
+
+  --rose:         #d4566a;
+  --rose-mid:     #e07080;
+  --rose-light:   #f0a0b0;
+  --rose-pale:    #fdeef1;
+  --rose-deep:    #b03a50;
+
+  --ink:          #1c0a0e;
+  --ink-2:        #5a2a35;
+  --ink-3:        #9a6070;
+  --ink-4:        #c8a0a8;
+
+  --nav-h:        66px;
+  --max-w:        1140px;
+  --r:            12px;
+  --r-sm:         8px;
+
+  --ease:         cubic-bezier(.25,.46,.45,.94);
+  --t:            0.32s;
+}
+
+[data-theme="dark"] {
+  --bg:           #120609;
+  --bg-alt:       #1a0b0e;
+  --surface:      #221013;
+  --surface2:     #2e1418;
+  --border:       #3c1e24;
+  --border-pink:  #5a2a35;
+
+  --rose:         #f07888;
+  --rose-mid:     #e89098;
+  --rose-light:   #d87888;
+  --rose-pale:    #2a1018;
+  --rose-deep:    #ffaabb;
+
+  --ink:          #fef0f2;
+  --ink-2:        #ddbbc0;
+  --ink-3:        #9a6870;
+  --ink-4:        #5a3840;
+}
+
+/* ============================
+   BASE
+   ============================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  transition: background var(--t) var(--ease), color var(--t) var(--ease);
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-pink); border-radius: 99px; }
+
+/* ============================
+   LAYOUT
+   ============================ */
+.container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 5vw;
+}
+section { padding: 100px 0; }
+
+/* ============================
+   TYPOGRAPHY ATOMS
+   ============================ */
+.label {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--rose);
+  margin-bottom: 12px;
+}
+.label::before {
+  content: ''; display: block;
+  width: 24px; height: 1.5px; background: var(--rose);
+}
+.heading {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 400; line-height: 1.18;
+  letter-spacing: -0.02em; color: var(--ink);
+  margin-bottom: 60px;
+}
+.heading em { color: var(--rose); font-style: italic; }
+
+/* ============================
+   NAVBAR
+   ============================ */
+#nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: var(--nav-h);
+  background: rgba(254,252,251,0.88);
+  backdrop-filter: blur(18px) saturate(160%);
+  border-bottom: 1px solid var(--border);
+  transition: background var(--t), border-color var(--t);
+}
+[data-theme="dark"] #nav { background: rgba(18,6,9,0.9); }
+
+.nav-inner {
+  height: 100%; display: flex; align-items: center;
+  justify-content: space-between;
+  max-width: var(--max-w); margin: 0 auto; padding: 0 5vw;
+}
+.nav-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem; font-weight: 500; color: var(--ink);
+  letter-spacing: -0.01em; white-space: nowrap;
+}
+.nav-brand span { color: var(--rose); }
+
+.nav-links {
+  display: flex; align-items: center; gap: 36px;
+}
+.nav-links a {
+  font-size: 0.8rem; font-weight: 500;
+  letter-spacing: 0.07em; text-transform: uppercase;
+  color: var(--ink-3); transition: color 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; left: 0; bottom: -2px;
+  height: 1.5px; width: 0; background: var(--rose);
+  transition: width 0.25s var(--ease);
+}
+.nav-links a:hover, .nav-links a.active { color: var(--rose); }
+.nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+.nav-right { display: flex; align-items: center; gap: 12px; }
+
+.toggle-btn {
+  width: 42px; height: 24px;
+  background: var(--border); border-radius: 99px;
+  position: relative; transition: background 0.3s; flex-shrink: 0;
+}
+.toggle-btn::after {
+  content: ''; position: absolute; top: 4px; left: 4px;
+  width: 16px; height: 16px;
+  background: var(--rose); border-radius: 50%;
+  transition: transform 0.3s;
+}
+[data-theme="dark"] .toggle-btn::after { transform: translateX(18px); }
+
+.ham-btn {
+  display: none; flex-direction: column; gap: 5px; padding: 4px;
+}
+.ham-btn span {
+  display: block; width: 22px; height: 2px;
+  background: var(--ink); border-radius: 2px; transition: all 0.3s;
+}
+
+#mobile-nav {
+  display: none; position: fixed;
+  top: var(--nav-h); left: 0; right: 0; z-index: 199;
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 20px 5vw 28px; flex-direction: column; gap: 18px;
+}
+#mobile-nav.open { display: flex; }
+#mobile-nav a { font-size: 0.92rem; font-weight: 500; color: var(--ink-2); }
+
+/* ============================
+   HERO
+   ============================ */
+#hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding-top: var(--nav-h);
+  position: relative; overflow: hidden;
+}
+
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(72px); pointer-events: none;
+  animation: drift 10s ease-in-out infinite;
+}
+.blob-1 {
+  width: 560px; height: 560px;
+  background: radial-gradient(circle, #fde8ed 0%, #fadadd40 60%, transparent 80%);
+  top: -120px; right: -100px; opacity: 0.8;
+}
+.blob-2 {
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, #f5c0c820 0%, transparent 70%);
+  bottom: 40px; left: -60px; opacity: 0.6;
+  animation-delay: -4s;
+}
+[data-theme="dark"] .blob-1 {
+  background: radial-gradient(circle, #2a1018 0%, transparent 70%);
+}
+[data-theme="dark"] .blob-2 {
+  background: radial-gradient(circle, #1e0c10 0%, transparent 70%);
+}
+@keyframes drift {
+  0%,100% { transform: translate(0,0); }
+  40%      { transform: translate(24px,-18px); }
+  70%      { transform: translate(-12px,14px); }
+}
+
+.hero-inner {
+  position: relative; z-index: 1;
+  max-width: var(--max-w); margin: 0 auto; padding: 60px 5vw;
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 60px; align-items: center;
+  width: 100%;
+}
+
+.hero-chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--rose-pale); border: 1px solid var(--border-pink);
+  color: var(--rose); font-size: 0.74rem; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 6px 16px; border-radius: 99px; margin-bottom: 28px;
+}
+.hero-chip::before {
+  content: '●'; font-size: 0.4rem;
+  animation: blink 2s ease infinite;
+}
+@keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+.hero-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 7.5vw, 5.8rem);
+  font-weight: 400; line-height: 1.04;
+  letter-spacing: -0.03em; color: var(--ink); margin-bottom: 16px;
+}
+.hero-name .rose-italic { color: var(--rose); font-style: italic; }
+
+.hero-role {
+  font-size: clamp(1rem, 2vw, 1.18rem);
+  color: var(--ink-3); font-weight: 300;
+  letter-spacing: 0.03em; margin-bottom: 28px;
+}
+.hero-role strong { color: var(--ink-2); font-weight: 500; }
+
+.hero-tagline {
+  font-size: 0.97rem; line-height: 1.78;
+  color: var(--ink-3); font-weight: 300;
+  max-width: 520px; margin-bottom: 44px;
+  border-left: 2px solid var(--border-pink);
+  padding-left: 20px;
+}
+
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.btn-rose {
+  background: var(--rose); color: #fff;
+  font-size: 0.86rem; font-weight: 500; letter-spacing: 0.05em;
+  padding: 13px 30px; border-radius: 99px;
+  box-shadow: 0 6px 24px rgba(212,86,106,0.32);
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  display: inline-block;
+}
+.btn-rose:hover {
+  background: var(--rose-deep); transform: translateY(-2px);
+  box-shadow: 0 10px 32px rgba(212,86,106,0.42);
+}
+.btn-ghost {
+  color: var(--ink-2); font-size: 0.86rem; font-weight: 500;
+  letter-spacing: 0.05em; padding: 12px 28px; border-radius: 99px;
+  border: 1.5px solid var(--border);
+  transition: border-color 0.2s, color 0.2s, transform 0.2s;
+  display: inline-block;
+}
+.btn-ghost:hover {
+  border-color: var(--rose); color: var(--rose); transform: translateY(-2px);
+}
+
+.hero-right {
+  display: flex; flex-direction: column; gap: 14px; align-items: flex-end;
+}
+.hero-badge {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 18px 22px;
+  min-width: 175px; text-align: center;
+}
+.hero-badge .b-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; color: var(--rose); display: block; margin-bottom: 4px;
+}
+.hero-badge .b-lbl {
+  font-size: 0.73rem; color: var(--ink-4);
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.hero-avail {
+  background: var(--rose-pale); border: 1px solid var(--border-pink);
+  border-radius: var(--r); padding: 14px 18px; min-width: 175px;
+  font-size: 0.78rem; color: var(--rose); font-weight: 500;
+  display: flex; align-items: center; gap: 7px;
+}
+.hero-avail::before {
+  content: '●'; font-size: 0.45rem; animation: blink 2s ease infinite;
+}
+
+.scroll-cue {
+  position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-4); animation: scrollBob 2.5s ease-in-out infinite;
+}
+.scroll-cue::after { content: '↓'; font-size: 0.9rem; color: var(--rose); }
+@keyframes scrollBob {
+  0%,100%{transform:translateX(-50%) translateY(0);}
+  50%{transform:translateX(-50%) translateY(8px);}
+}
+
+/* ============================
+   ABOUT
+   ============================ */
+#about { background: var(--bg-alt); }
+
+.about-grid {
+  display: grid; grid-template-columns: 1.15fr 0.85fr;
+  gap: 72px; align-items: start;
+}
+.about-body p {
+  font-size: 1rem; line-height: 1.84;
+  color: var(--ink-2); font-weight: 300; margin-bottom: 18px;
+}
+.about-body p:last-child { margin-bottom: 0; }
+
+.about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.stat {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 24px 20px;
+  position: relative; overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.stat::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 2px; background: linear-gradient(90deg, var(--rose), var(--rose-light));
+}
+.stat:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(180,60,80,0.1); }
+.stat-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem; font-weight: 400; color: var(--rose);
+  line-height: 1; margin-bottom: 6px;
+}
+.stat-desc { font-size: 0.78rem; color: var(--ink-4); letter-spacing: 0.04em; }
+
+/* ============================
+   EXPERIENCE
+   ============================ */
+#experience { background: var(--bg); }
+
+.tl-item {
+  display: grid; grid-template-columns: 210px 1fr;
+  gap: 40px; margin-bottom: 64px; position: relative;
+}
+.tl-item:last-child { margin-bottom: 0; }
+.tl-item:not(:last-child)::after {
+  content: ''; position: absolute;
+  left: calc(210px + 20px); top: 28px; bottom: -64px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--border-pink), var(--border));
+}
+
+.tl-left { padding-top: 6px; }
+.tl-duration {
+  font-size: 0.76rem; font-weight: 400; letter-spacing: 0.06em;
+  color: var(--rose); font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 6px;
+}
+.tl-company {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem; font-weight: 400; color: var(--ink);
+  margin-bottom: 4px; letter-spacing: -0.01em;
+}
+.tl-role { font-size: 0.82rem; color: var(--ink-3); font-weight: 400; }
+
+.tl-right {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 32px 30px;
+  position: relative;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.tl-right::before {
+  content: ''; position: absolute;
+  left: -20px; top: 18px;
+  width: 10px; height: 10px;
+  background: var(--rose); border-radius: 50%;
+  border: 2.5px solid var(--bg);
+  box-shadow: 0 0 0 2px var(--border-pink);
+}
+.tl-right:hover {
+  border-color: var(--border-pink);
+  box-shadow: 0 6px 28px rgba(180,60,80,0.08);
+}
+
+.tl-achievements { display: flex; flex-direction: column; gap: 12px; }
+.tl-achievements li {
+  display: flex; gap: 12px; align-items: flex-start;
+  font-size: 0.93rem; line-height: 1.68; color: var(--ink-2); font-weight: 300;
+}
+.tl-achievements li .arr {
+  color: var(--rose); flex-shrink: 0; margin-top: 3px;
+  font-size: 0.7rem; font-family: 'JetBrains Mono', monospace;
+}
+
+/* ============================
+   SKILLS
+   ============================ */
+#skills { background: var(--bg-alt); }
+
+.skills-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+.skill-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 26px 24px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.skill-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(180,60,80,0.08);
+}
+.sk-title {
+  font-size: 0.7rem; letter-spacing: 0.13em; text-transform: uppercase;
+  color: var(--rose); font-weight: 500; margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.sk-title::before { content: ''; display: block; width: 14px; height: 1.5px; background: var(--rose); }
+.pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill {
+  background: var(--surface2); color: var(--ink-2);
+  font-size: 0.8rem; font-weight: 400;
+  padding: 5px 14px; border-radius: 99px;
+  border: 1px solid var(--border);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.01em;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.pill:hover { background: var(--rose); color: #fff; border-color: var(--rose); }
+
+/* ============================
+   PROJECTS / GITHUB
+   ============================ */
+#projects { background: var(--bg); }
+
+.gh-box {
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 40px; align-items: center;
+  background: var(--surface); border: 1px solid var(--border-pink);
+  border-radius: 18px; padding: 48px 44px;
+  position: relative; overflow: hidden;
+}
+.gh-box::before {
+  content: ''; position: absolute; top: -70px; right: -70px;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, var(--rose-pale) 0%, transparent 70%);
+  pointer-events: none;
+}
+.gh-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.65rem; font-weight: 400; color: var(--ink);
+  margin-bottom: 10px; letter-spacing: -0.01em;
+}
+.gh-body {
+  font-size: 0.95rem; color: var(--ink-3); font-weight: 300;
+  line-height: 1.72; max-width: 480px; margin-bottom: 28px;
+}
+.gh-user {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--r-sm); padding: 10px 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem; color: var(--ink-2);
+  margin-bottom: 20px;
+}
+.gh-icon-wrap {
+  width: 90px; height: 90px;
+  background: var(--rose-pale); border: 1.5px solid var(--border-pink);
+  border-radius: 50%; display: flex; align-items: center;
+  justify-content: center; font-size: 2.6rem; flex-shrink: 0;
+  position: relative; z-index: 1;
+}
+
+/* ============================
+   EDUCATION
+   ============================ */
+#education { background: var(--bg-alt); }
+
+.edu-card {
+  display: flex; gap: 28px; align-items: flex-start;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 36px 32px;
+  max-width: 660px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.edu-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(180,60,80,0.08);
+}
+.edu-icon-wrap {
+  width: 54px; height: 54px; flex-shrink: 0;
+  background: var(--rose-pale); border: 1px solid var(--border-pink);
+  border-radius: var(--r-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+}
+.edu-degree {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; font-weight: 400; color: var(--ink);
+  margin-bottom: 4px; letter-spacing: -0.01em;
+}
+.edu-field { font-size: 0.9rem; color: var(--ink-2); font-weight: 300; margin-bottom: 3px; }
+.edu-school { font-size: 0.84rem; color: var(--ink-3); font-weight: 300; margin-bottom: 14px; }
+.edu-badge {
+  display: inline-block; background: var(--rose-pale);
+  color: var(--rose); font-size: 0.75rem; font-weight: 500;
+  padding: 5px 14px; border-radius: 99px;
+  border: 1px solid var(--border-pink); letter-spacing: 0.06em;
+}
+
+/* ============================
+   CONTACT
+   ============================ */
+#contact { background: var(--bg); }
+
+.contact-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 64px; align-items: start;
+}
+.contact-intro {
+  font-size: 1rem; line-height: 1.82;
+  color: var(--ink-2); font-weight: 300; margin-bottom: 36px;
+}
+.contact-list { display: flex; flex-direction: column; gap: 12px; }
+.c-row {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r-sm); padding: 14px 18px;
+  color: var(--ink-2); font-size: 0.9rem; font-weight: 300;
+  transition: border-color 0.2s, transform 0.2s, color 0.2s;
+}
+.c-row:hover { border-color: var(--rose); color: var(--rose); transform: translateX(4px); }
+.c-ico {
+  width: 34px; height: 34px; flex-shrink: 0;
+  background: var(--rose-pale); border: 1px solid var(--border-pink);
+  border-radius: var(--r-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.95rem;
+}
+.c-lbl {
+  font-size: 0.7rem; color: var(--ink-4);
+  letter-spacing: 0.07em; text-transform: uppercase;
+  display: block; margin-bottom: 2px;
+}
+.c-val { font-size: 0.87rem; color: var(--ink-2); word-break: break-all; }
+
+.contact-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; padding: 40px 36px;
+  text-align: center;
+  position: sticky; top: calc(var(--nav-h) + 32px);
+}
+.cc-av {
+  width: 88px; height: 88px; margin: 0 auto 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--rose-pale), var(--border-pink));
+  border: 2px solid var(--border-pink);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem; font-weight: 400; color: var(--rose);
+}
+.cc-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; font-weight: 400; color: var(--ink);
+  margin-bottom: 4px; letter-spacing: -0.01em;
+}
+.cc-role { font-size: 0.84rem; color: var(--ink-3); font-weight: 300; margin-bottom: 6px; }
+.cc-loc {
+  font-size: 0.8rem; color: var(--ink-4);
+  display: flex; align-items: center; justify-content: center; gap: 5px;
+}
+.cc-sep { border: none; border-top: 1px solid var(--border); margin: 22px 0; }
+.cc-open {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--rose-pale); color: var(--rose);
+  font-size: 0.78rem; font-weight: 500; letter-spacing: 0.06em;
+  padding: 8px 20px; border-radius: 99px;
+  border: 1px solid var(--border-pink);
+}
+.cc-open::before { content: '●'; font-size: 0.45rem; animation: blink 2s ease infinite; }
+
+/* ============================
+   FOOTER
+   ============================ */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 0;
+}
+.footer-inner {
+  max-width: var(--max-w); margin: 0 auto; padding: 0 5vw;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px;
+}
+.footer-copy { font-size: 0.8rem; color: var(--ink-4); font-weight: 300; }
+.footer-copy span { color: var(--rose); }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { font-size: 0.8rem; color: var(--ink-4); transition: color 0.2s; }
+.footer-links a:hover { color: var(--rose); }
+
+/* ============================
+   SCROLL REVEAL
+   ============================ */
+.rv {
+  opacity: 0; transform: translateY(26px);
+  transition: opacity 0.65s var(--ease), transform 0.65s var(--ease);
+}
+.rv.in { opacity: 1; transform: translateY(0); }
+.rv.d1 { transition-delay: 0.1s; }
+.rv.d2 { transition-delay: 0.2s; }
+.rv.d3 { transition-delay: 0.3s; }
+.rv.d4 { transition-delay: 0.4s; }
+
+/* ============================
+   RESPONSIVE
+   ============================ */
+@media (max-width: 960px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-right { flex-direction: row; flex-wrap: wrap; align-items: flex-start; }
+  .about-grid { grid-template-columns: 1fr; gap: 48px; }
+  .tl-item { grid-template-columns: 1fr; gap: 16px; }
+  .tl-item::after { display: none; }
+  .tl-right::before { display: none; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .contact-card { position: static; }
+  .gh-box { grid-template-columns: 1fr; }
+  .gh-icon-wrap { display: none; }
+}
+@media (max-width: 680px) {
+  .nav-links { display: none; }
+  .ham-btn { display: flex; }
+  section { padding: 72px 0; }
+  .hero-name { font-size: 2.6rem; }
+  .about-stats { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 400px) {
+  .about-stats { grid-template-columns: 1fr; }
+  .hero-actions { flex-direction: column; }
+  .gh-box { padding: 32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════
+     NAVBAR
+══════════════════════════ -->
+<nav id="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">Tanuja Naidu <span>Adabala</span></div>
+    <div class="nav-links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="nav-right">
+      <button class="toggle-btn" id="themeToggle" aria-label="Toggle theme"></button>
+      <button class="ham-btn" id="hamBtn" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div id="mobile-nav">
+  <a href="#about"      onclick="closeMob()">About</a>
+  <a href="#experience" onclick="closeMob()">Experience</a>
+  <a href="#skills"     onclick="closeMob()">Skills</a>
+  <a href="#projects"   onclick="closeMob()">Projects</a>
+  <a href="#education"  onclick="closeMob()">Education</a>
+  <a href="#contact"    onclick="closeMob()">Contact</a>
+</div>
+
+<!-- ══════════════════════════
+     HERO
+══════════════════════════ -->
+<section id="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-chip rv">DevOps Engineer &nbsp;·&nbsp; India</div>
+
+      <h1 class="hero-name rv d1">
+        Tanuja<br>
+        <span class="rose-italic">Naidu Adabala</span>
+      </h1>
+
+      <p class="hero-role rv d2">
+        <strong>DevOps Engineer</strong> &nbsp;·&nbsp; Cloud &nbsp;·&nbsp; CI/CD &nbsp;·&nbsp; Automation
+      </p>
+
+      <p class="hero-tagline rv d3">
+        Hands-on DevOps Engineer with experience in building data pipelines,
+        automating cloud workflows, and managing containerized deployments.
+        Focused on reliability, efficiency, and scalable infrastructure.
+      </p>
+
+      <div class="hero-actions rv d4">
+        <a href="#contact" class="btn-rose">Get in touch</a>
+        <a href="#experience" class="btn-ghost">View experience</a>
+        <a href="https://github.com/adabalatanuja558" target="_blank" rel="noopener" class="btn-ghost">GitHub ↗</a>
+      </div>
+    </div>
+
+    <div class="hero-right rv d2">
+      <div class="hero-badge">
+        <span class="b-val">2+</span>
+        <span class="b-lbl">Years Experience</span>
+      </div>
+      <div class="hero-badge">
+        <span class="b-val">2</span>
+        <span class="b-lbl">Companies</span>
+      </div>
+      <div class="hero-avail">Open to Opportunities</div>
+    </div>
+  </div>
+
+  <div class="scroll-cue">Scroll</div>
+</section>
+
+<!-- ══════════════════════════
+     ABOUT
+══════════════════════════ -->
+<section id="about">
+  <div class="container">
+    <div class="label rv">About me</div>
+    <h2 class="heading rv d1">Who <em>I am</em></h2>
+
+    <div class="about-grid">
+      <div class="about-body rv d1">
+        <p>
+          Hi, I'm Tanu — a DevOps Engineer with hands-on experience in building and
+          managing data pipelines, automation, and cloud-based workflows. At Accenture,
+          I designed and maintained ETL pipelines, performed data validation, and ensured
+          data integrity across systems while collaborating with cross-functional teams.
+        </p>
+        <p>
+          My work has given me practical exposure to DevOps fundamentals: automating
+          workflows, working with Git for version control, managing cloud storage via
+          AWS S3, ensuring system reliability, and supporting deployment and pipeline
+          monitoring activities.
+        </p>
+        <p>
+          I've further strengthened my skill set through hands-on work with Docker
+          containerisation, CI/CD pipeline implementation, Linux scripting, and cloud
+          fundamentals. My goal is to leverage this experience in a full-time DevOps role
+          — contributing to reliable, automated, and scalable infrastructure.
+        </p>
+      </div>
+
+      <div class="about-stats rv d2">
+        <div class="stat">
+          <div class="stat-val">2+</div>
+          <div class="stat-desc">Years of experience</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val">2</div>
+          <div class="stat-desc">Companies worked at</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val">AWS</div>
+          <div class="stat-desc">Cloud platform used</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val">CI/CD</div>
+          <div class="stat-desc">Pipeline specialist</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     EXPERIENCE
+══════════════════════════ -->
+<section id="experience">
+  <div class="container">
+    <div class="label rv">Career</div>
+    <h2 class="heading rv d1">Work <em>Experience</em></h2>
+
+    <div class="timeline">
+
+      <!-- ─── Turing ─── -->
+      <div class="tl-item rv">
+        <div class="tl-left">
+          <div class="tl-duration">Dec 2025 – Jan 2026</div>
+          <div class="tl-company">Turing</div>
+          <div class="tl-role">DevOps Engineer</div>
+        </div>
+        <div class="tl-right">
+          <ul class="tl-achievements">
+            <li><span class="arr">→</span> Built and managed CI/CD pipelines to automate build, test, and deployment processes.</li>
+            <li><span class="arr">→</span> Worked on containerisation using Docker to ensure consistent environments across development and production.</li>
+            <li><span class="arr">→</span> Utilised AWS services for deployment and cloud infrastructure management.</li>
+            <li><span class="arr">→</span> Automated repetitive tasks using scripting, improving overall workflow efficiency.</li>
+            <li><span class="arr">→</span> Monitored system performance and resolved deployment issues to maintain reliability.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ─── Accenture ─── -->
+      <div class="tl-item rv d1">
+        <div class="tl-left">
+          <div class="tl-duration">Apr 2023 – Aug 2024</div>
+          <div class="tl-company">Accenture</div>
+          <div class="tl-role">DevOps Engineer</div>
+        </div>
+        <div class="tl-right">
+          <ul class="tl-achievements">
+            <li><span class="arr">→</span> Automated data pipelines and workflows, reducing manual effort and improving system efficiency.</li>
+            <li><span class="arr">→</span> Ensured system reliability through validation checks, monitoring, and error-handling mechanisms.</li>
+            <li><span class="arr">→</span> Worked with AWS S3 for cloud storage and scalable data handling across distributed systems.</li>
+            <li><span class="arr">→</span> Collaborated with cross-functional teams to troubleshoot and optimise data workflows end-to-end.</li>
+            <li><span class="arr">→</span> Improved performance of data processes by optimising execution logic and transformation steps.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     SKILLS
+══════════════════════════ -->
+<section id="skills">
+  <div class="container">
+    <div class="label rv">Capabilities</div>
+    <h2 class="heading rv d1">Skills &amp; <em>Technologies</em></h2>
+
+    <div class="skills-grid">
+
+      <div class="skill-card rv">
+        <div class="sk-title">Cloud &amp; Infrastructure</div>
+        <div class="pills">
+          <span class="pill">AWS S3</span>
+          <span class="pill">AWS EC2</span>
+          <span class="pill">AWS Services</span>
+          <span class="pill">Cloud Infrastructure</span>
+        </div>
+      </div>
+
+      <div class="skill-card rv d1">
+        <div class="sk-title">DevOps &amp; CI/CD</div>
+        <div class="pills">
+          <span class="pill">Docker</span>
+          <span class="pill">CI/CD Pipelines</span>
+          <span class="pill">GitHub Actions</span>
+          <span class="pill">Jenkins</span>
+          <span class="pill">Pipeline Monitoring</span>
+        </div>
+      </div>
+
+      <div class="skill-card rv d2">
+        <div class="sk-title">Data Engineering</div>
+        <div class="pills">
+          <span class="pill">ETL Pipelines</span>
+          <span class="pill">Data Validation</span>
+          <span class="pill">Data Integrity</span>
+          <span class="pill">Workflow Automation</span>
+        </div>
+      </div>
+
+      <div class="skill-card rv d1">
+        <div class="sk-title">Languages &amp; Scripting</div>
+        <div class="pills">
+          <span class="pill">Python</span>
+          <span class="pill">Bash / Shell</span>
+          <span class="pill">Linux</span>
+          <span class="pill">YAML</span>
+        </div>
+      </div>
+
+      <div class="skill-card rv d2">
+        <div class="sk-title">Version Control</div>
+        <div class="pills">
+          <span class="pill">Git</span>
+          <span class="pill">GitHub</span>
+          <span class="pill">Branch Management</span>
+        </div>
+      </div>
+
+      <div class="skill-card rv d3">
+        <div class="sk-title">Practices</div>
+        <div class="pills">
+          <span class="pill">Cross-team Collaboration</span>
+          <span class="pill">System Reliability</span>
+          <span class="pill">Agile</span>
+          <span class="pill">Documentation</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     PROJECTS / GITHUB
+══════════════════════════ -->
+<section id="projects">
+  <div class="container">
+    <div class="label rv">Open Source</div>
+    <h2 class="heading rv d1">GitHub <em>Projects</em></h2>
+
+    <div class="gh-box rv d2">
+      <div>
+        <div class="gh-title">Explore my repositories</div>
+        <p class="gh-body">
+          All hands-on projects — covering Docker containerisation, CI/CD pipelines,
+          AWS workflows, Linux scripting, and ETL automation — are available directly
+          on my GitHub profile.
+        </p>
+        <div class="gh-user">🐙 &nbsp;adabalatanuja558</div>
+        <br/>
+        <a href="https://github.com/adabalatanuja558"
+           target="_blank" rel="noopener" class="btn-rose">
+          View All Repositories ↗
+        </a>
+      </div>
+      <div class="gh-icon-wrap">🐙</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     EDUCATION
+══════════════════════════ -->
+<section id="education">
+  <div class="container">
+    <div class="label rv">Academic</div>
+    <h2 class="heading rv d1">My <em>Education</em></h2>
+
+    <div class="edu-card rv d2">
+      <div class="edu-icon-wrap">🎓</div>
+      <div>
+        <div class="edu-degree">Bachelor of Technology (B.Tech)</div>
+        <div class="edu-field">Computer Science &amp; Engineering</div>
+        <div class="edu-school">BVCITS &nbsp;·&nbsp; JNTUK</div>
+        <div class="edu-badge">Class of 2022</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     CONTACT
+══════════════════════════ -->
+<section id="contact">
+  <div class="container">
+    <div class="label rv">Let's connect</div>
+    <h2 class="heading rv d1">Get in <em>Touch</em></h2>
+
+    <div class="contact-grid">
+      <div>
+        <p class="contact-intro rv d1">
+          I'm currently open to new DevOps opportunities. Whether you have a
+          role in mind, a project to collaborate on, or simply want to connect —
+          I'd love to hear from you.
+        </p>
+
+        <div class="contact-list">
+
+          <a href="mailto:adabalatanuja558@gmail.com" class="c-row rv d1">
+            <div class="c-ico">✉️</div>
+            <div>
+              <span class="c-lbl">Email</span>
+              <span class="c-val">adabalatanuja558@gmail.com</span>
+            </div>
+          </a>
+
+          <a href="https://www.linkedin.com/in/tanuja-naidu-adabala-b689701b2"
+             target="_blank" rel="noopener" class="c-row rv d2">
+            <div class="c-ico">💼</div>
+            <div>
+              <span class="c-lbl">LinkedIn</span>
+              <span class="c-val">tanuja-naidu-adabala-b689701b2</span>
+            </div>
+          </a>
+
+          <a href="https://github.com/adabalatanuja558"
+             target="_blank" rel="noopener" class="c-row rv d3">
+            <div class="c-ico">🐙</div>
+            <div>
+              <span class="c-lbl">GitHub</span>
+              <span class="c-val">github.com/adabalatanuja558</span>
+            </div>
+          </a>
+
+          <div class="c-row rv d4" style="cursor:default;">
+            <div class="c-ico">📍</div>
+            <div>
+              <span class="c-lbl">Location</span>
+              <span class="c-val">India</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="contact-card rv d2">
+        <div class="cc-av">T</div>
+        <div class="cc-name">Tanuja Naidu Adabala</div>
+        <div class="cc-role">DevOps Engineer</div>
+        <div class="cc-loc">📍 India</div>
+        <hr class="cc-sep"/>
+        <div class="cc-open">Open to Opportunities</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════
+     FOOTER
+══════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-copy">© 2025 Tanuja Naidu Adabala. Made with <span>♥</span></div>
+    <nav class="footer-links">
+      <a href="mailto:adabalatanuja558@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/tanuja-naidu-adabala-b689701b2"
+         target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/adabalatanuja558"
+         target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</footer>
+
+<!-- ══════════════════════════
+     JAVASCRIPT
+══════════════════════════ -->
+<script>
+/* ── Theme toggle ── */
+const root  = document.documentElement;
+const saved = localStorage.getItem('tna-theme') || 'light';
+root.setAttribute('data-theme', saved);
+
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+  root.setAttribute('data-theme', next);
+  localStorage.setItem('tna-theme', next);
+});
+
+/* ── Mobile menu ── */
+const hamBtn = document.getElementById('hamBtn');
+const mobNav = document.getElementById('mobile-nav');
+hamBtn.addEventListener('click', () => mobNav.classList.toggle('open'));
+function closeMob() { mobNav.classList.remove('open'); }
+
+/* ── Scroll reveal ── */
+const rvObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.rv').forEach(el => rvObs.observe(el));
+
+/* ── Active nav link ── */
+const sectionIds = ['hero','about','experience','skills','projects','education','contact'];
+const navLinks   = document.querySelectorAll('.nav-links a');
+
+const navObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(a => a.classList.remove('active'));
+      const active = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { threshold: 0.45 });
+
+sectionIds.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) navObs.observe(el);
+});
+
+/* ── Hero blob parallax ── */
+window.addEventListener('scroll', () => {
+  const y  = window.scrollY;
+  const b1 = document.querySelector('.blob-1');
+  const b2 = document.querySelector('.blob-2');
+  if (b1) b1.style.transform = `translate(${y * 0.025}px, ${-y * 0.04}px)`;
+  if (b2) b2.style.transform = `translate(${-y * 0.02}px, ${y * 0.03}px)`;
+}, { passive: true });
+</script>
+</body>
+</html>
